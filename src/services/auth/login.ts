@@ -5,7 +5,7 @@ import Api from "../api";
 export async function login(loginRequest: LoginRequest) {
 	const api = await Api.getInstance();
 	const response = await api.post<LoginRequest, AuthResponse>(loginRequest, {
-		url: "/auth/login",
+		url: "/authentication/login",
 	});
 	api.authorization = response.data.token;
 	return response;

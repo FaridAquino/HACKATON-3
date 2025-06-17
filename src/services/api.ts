@@ -19,7 +19,7 @@ export default class Api {
 
 	public static async getInstance() {
 		if (!this._instance) {
-			const basePath = `http://localhost:8080`;
+			const basePath = `http://198.211.105.95:8080`;
 			this._instance = new Api(basePath, null);
 		}
 
