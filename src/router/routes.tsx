@@ -3,6 +3,7 @@ import App from "src/App";
 import { ProtectedRoute } from "./ProtectedRoute";
 import LoginPage from "@pages/LoginPage";
 import RegisterPage from "@pages/RegisterPage";
+import ExpensesPage from "@pages/ExpensesPage";
 
 export const router = createBrowserRouter([
 	{
@@ -12,17 +13,22 @@ export const router = createBrowserRouter([
 			{
 				path: "auth",
 				children: [{
-					path:"login",
-					element:<LoginPage/>
+					path: "login",
+					element: <LoginPage />
 				}, {
-					path:"register",
-					element:<RegisterPage/>
+					path: "register",
+					element: <RegisterPage />
 				}],
 			},
 			{
 				path: "logged",
 				element: <ProtectedRoute />,
-				children: [{}, {}, {}, {}],
+				children: [
+					{
+						path: "expenses",
+						element: <ExpensesPage />
+
+					}, {}, {}, {}],
 			},
 			{
 				path: "*",
