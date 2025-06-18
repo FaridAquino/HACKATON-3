@@ -4,7 +4,7 @@ export default function NotFoundPage() {
 			<h1 id="notFound" className="text-2xl">
 				404 - Page Not Found
 			</h1>
-			<button id="historyBack" onClick={}>
+			<button id="historyBack" onClick={() => window.history.back()}>
 				Back
 			</button>
 		</>

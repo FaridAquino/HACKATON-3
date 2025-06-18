@@ -1,33 +1,44 @@
 import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-	const navigate = useNavigate();
-	function logout() {
-		localStorage.removeItem("token");
-		location.reload();
-	}
+  const navigate = useNavigate();
+  function logout() {
+    localStorage.removeItem("token");
+    location.reload();
+  }
 
-	if (localStorage.getItem("token")) {
-		return (
-
-			<div className="">
-				<section className="flex justify-center items-center py-4 gap-10">
-					<button onClick={() => navigate("/auth/login")} className="bg-blue-500">Iniciar sesion</button>
-					<button onClick={() => navigate("/auth/register")} className="bg-blue-500">Registrarse</button>
-				</section>
-				<div className="text-2xl">Uber</div>
-				<button id="logout" onClick={logout}>
-					Logout
-				</button>
-			</div>
-		);
-	} else {
-		return (
-			<div className="">Uber
-				<section className="flex justify-center items-center py-4 gap-10">
-					<button onClick={() => navigate("/auth/login")} className="bg-blue-500">Iniciar sesion</button>
-					<button onClick={() => navigate("/auth/register")} className="bg-blue-500">Registrarse</button>
-				</section>
-			</div>);
-	}
+  return (
+    <div className="bg-blue-600 text-white p-4">
+      <div className="flex justify-between items-center">
+        <div className="text-3xl font-bold">Ahorrista</div>
+        <section className="flex justify-center items-center gap-6">
+          {localStorage.getItem("token") ? (
+            <>
+              <button
+                onClick={logout}
+                className="bg-red-500 px-6 py-2 rounded-lg hover:bg-red-600 transition-all"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => navigate("/auth/login")}
+                className="bg-blue-500 px-6 py-2 rounded-lg hover:bg-blue-600 transition-all"
+              >
+                Iniciar sesión
+              </button>
+              <button
+                onClick={() => navigate("/auth/register")}
+                className="bg-green-500 px-6 py-2 rounded-lg hover:bg-green-600 transition-all"
+              >
+                Registrarse
+              </button>
+            </>
+          )}
+        </section>
+      </div>
+    </div>
+  );
 }
