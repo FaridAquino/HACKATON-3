@@ -1,6 +1,7 @@
 export default function Navbar() {
 	function logout() {
-		
+		localStorage.removeItem("token");
+		location.reload();
 	}
 
 	if (localStorage.getItem("token")) {
