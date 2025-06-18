@@ -1,50 +1,19 @@
-import { useState, type ChangeEvent } from "react";
-import { login } from "../services/auth/login";
+import LoginForm from "@components/LoginForm";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-	const [formData, setFormData] = useState({
-		email: "",
-		passwd: ""
-	});
-
-	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		const loginRequest = formData;
-		console.log("Login Request:", loginRequest);
-
-		try {
-			const response = await login(loginRequest);
-			console.log("Login Response:", response);
-			localStorage.setItem("token", response.data.token);
-			console.log("Login exitoso")
-		} catch (error) {
-			console.error("Login Error:", error);
-		}
-	}
-
-	function handleChange(event: ChangeEvent<HTMLInputElement>) {
-		const { name, value } = event.target;
-		setFormData((prevData) => ({
-			...prevData,
-			[name]: value
-		}));
-	}
-
+	const navigate=useNavigate()
 	return (
-		<div className="bg-white w-[400px] flex flex-col text-black ml-20">
-			<h1 className="text-2xl font-bold text-center mb-4">Iniciar Sesión</h1>
-			<form className="flex flex-col gap-4 p-4" onSubmit={handleSubmit}>
-				<input type="email" name="email" placeholder="Correo electrónico" className="border border-gray-300 p-2 rounded" value={formData.email} onChange={handleChange} />
-				<input
-					type="password"
-					name="passwd"  // <-- debe ser igual que en el estado
-					placeholder="Contraseña"
-					className="border border-gray-300 p-2 rounded"
-					value={formData.passwd}
-					onChange={handleChange}
-				/>
-				<button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-all cursor-pointer">Iniciar Sesión</button>
-			</form>
-		</div>
+		<main className="px-10 felx flex-col items-center justify-center">
+
+			<section className="flex justify-center items-center py-4 gap-10">
+				<button onClick={() => navigate("/login")} className="bg-blue-500">Iniciar sesion</button>
+				<button onClick={() => navigate("/register")} className="bg-blue-500">Registrarse</button>
+			</section>
+
+			<article className="flex justify-between">
+				<LoginForm />
+			</article>
+		</main>
 	);
 }

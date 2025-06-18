@@ -1,5 +1,8 @@
-import axios from "axios";
-import type { AxiosResponse,AxiosRequestConfig } from "axios";
+import axios, {
+	AxiosRequestConfig,
+	AxiosResponse,
+	RawAxiosRequestHeaders,
+} from "axios";
 
 export default class Api {
 	private static _instance: Api | null = null;
@@ -27,7 +30,7 @@ export default class Api {
 	}
 
 	public async request<RequestType, ResponseType>(config: AxiosRequestConfig) {
-		const headers = {
+		const headers: RawAxiosRequestHeaders = {
 			"Content-Type": "application/json",
 			Authorization: this._authorization ? `Bearer ${this._authorization}` : "",
 		};

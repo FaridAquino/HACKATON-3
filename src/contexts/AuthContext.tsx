@@ -1,11 +1,10 @@
-import { useStorageState } from "../hooks/useStorageState";
-import type { LoginRequest } from "../interfaces/auth/LoginRequest";
-import type { RegisterRequest } from "../interfaces/auth/RegisterRequest";
-import Api from "../services/api";
-import { login } from "../services/auth/login";
-import { register } from "../services/auth/register";
-import { createContext, useContext } from "react";
-import type { ReactNode } from "react";
+import { useStorageState } from "@hooks/useStorageState";
+import { LoginRequest } from "@interfaces/auth/LoginRequest";
+import { RegisterRequest } from "@interfaces/auth/RegisterRequest";
+import Api from "@services/api";
+import { login } from "@services/auth/login";
+import { register } from "@services/auth/register";
+import { createContext, ReactNode, useContext } from "react";
 
 interface AuthContextType {
 	register: (SignupRequest: RegisterRequest) => Promise<void>;
@@ -22,7 +21,7 @@ async function loginHandler(
 	setSession: (value: string) => void,
 ) {
 	const response = await login(loginRequest);
-	setSession(response.data.token);
+	setSession(response.data.result.token);
 }
 
 async function signupHandler(
@@ -30,7 +29,7 @@ async function signupHandler(
 	setSession: (value: string) => void,
 ) {
 	const response = await register(signupRequest);
-	setSession(response.data.token);
+	setSession(response.data.result.token);
 }
 
 export function AuthProvider(props: { children: ReactNode }) {

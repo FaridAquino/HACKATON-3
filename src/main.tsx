@@ -1,7 +1,7 @@
-import { AuthProvider } from "../src/contexts/AuthContext";
-import { router } from "../src/router/routes";
-import "../src/App.css"
-import "../src/index.css"
+import { AuthProvider } from "@contexts/AuthContext";
+import { router } from "@router/routes";
+import "@styles/App.css";
+import "@styles/index.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
@@ -13,5 +13,3 @@ createRoot(document.getElementById("root")!).render(
 		</AuthProvider>
 	</StrictMode>,
 );
-
-
