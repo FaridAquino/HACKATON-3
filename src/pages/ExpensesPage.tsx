@@ -46,6 +46,12 @@ export default function ExpensesPage() {
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [loading, setLoading] = useState(false);
 
+    if (!selectedCategory && !selectedMonth && !selectedYear) {
+        alert("Debe seleccionar en los 3 espeacios");
+        setLoading(false);
+        return;
+    }
+
     const mockExpenses: Expense[] = [
         {
             id: 1,
