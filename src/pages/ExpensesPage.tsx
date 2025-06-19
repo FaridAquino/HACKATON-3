@@ -1,78 +1,62 @@
 // src/pages/ExpensesPage.tsx
 import { useState } from "react";
 import { FaMoneyBillWave } from "react-icons/fa"; // Ícono para gastos
-import { useEffect } from "react";
-import { getExpenses } from "../services/getExpenses"
-
-interface Expense {
-    id: number;
-    date: string;
-    category: { id: number; name: string };
-    amount: number;
-}
+import { getExpenses } from "@services/getExpenses"; // Asegúrate de que esta ruta sea correcta
+import ExpensesResponse from "@interfaces/expenses/ExpensesResponse";
 
 const categories = [
-    "Alimentación",
-    "Transporte",
-    "Vivienda",
-    "Servicios (agua, luz, internet)",
-    "Educación",
-    "Salud",
-    "Entretenimiento",
-    "Ropa y calzado",
-    "Ahorros",
-    "Impuestos",
-    "Mascotas",
-    "Viajes",
-    "Donaciones",
-    "Seguros",
-    "Hijos y familia",
-    "Gimnasio y deporte",
-    "Tecnología y gadgets",
-    "Mantenimiento del hogar",
-    "Bebidas y snacks",
-    "Otros gastos personales"
+    {name:"Alimentación", id: 1},
+    {name:"Transporte", id: 2},
+    {name:"Vivienda", id: 3},
+    {name:"Servicios", id: 4},
+    {name:"Educaion", id: 5},
+    {name:"Salud", id: 6},
+    {name:"Entretenimiento", id: 7},
+    {name:"Ropa y calzado", id: 8},
+    {name:"Ahorros", id: 9},
+    {name:"Impuestos", id: 10},
+    {name:"Mascotas", id: 11},
+    {name:"Viajes",id: 12},
+    {name:"Donaciones", id: 13},
+    {name:"Seguros", id: 14},
+    {name:"Hijos y familia", id: 15},
+    {name:"Gimnasio y deporte", id: 16},
+    {name:"Tecnología y gadgets", id: 17},
+    {name:"Mantenimiento del hogar", id: 18},
+    {name:"Bebidas y snacks", id: 19},
+    {name:"Otros gastos personales", id: 20},
 ];
+
 const months = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    { name: "Enero", value: 1 },
+    { name: "Febrero", value: 2 },
+    { name: "Marzo", value: 3 },
+    { name: "Abril", value: 4 },
+    { name: "Mayo", value: 5 },
+    { name: "Junio", value: 6 },
+    { name: "Julio", value: 7 },
+    { name: "Agosto", value: 8 },
+    { name: "Septiembre", value: 9 },
+    { name: "Octubre", value: 10 },
+    { name: "Noviembre", value: 11 },
+    { name: "Diciembre", value: 12 },
 ];
 const years = [2023, 2024, 2025];
 
 export default function ExpensesPage() {
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [selectedMonth, setSelectedMonth] = useState("");
-    const [selectedYear, setSelectedYear] = useState("");
-    const [expenses, setExpenses] = useState<Expense[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState(0);
+    const [selectedMonth, setSelectedMonth] = useState(0);
+    const [selectedYear, setSelectedYear] = useState(0);
+    const [expenses, setExpenses] = useState<ExpensesResponse>([]);
     const [loading, setLoading] = useState(false);
-
-    const mockExpenses: Expense[] = [
-        {
-            id: 1,
-            date: "2025-01-18",
-            category: { id: 1, name: "Alimentación" },
-            amount: 116.84
-        },
-        {
-            id: 2,
-            date: "2025-02-05",
-            category: { id: 2, name: "Transporte" },
-            amount: 49.20
-        },
-    ]
-
-    useEffect(() => {
-        setExpenses(mockExpenses);
-    }, []);
-
-
 
     const fetchGastos = async () => {
         setLoading(true);
 
         try {
-            const info = await getExpenses();
-            setExpenses(info);
+            const response = await getExpenses(selectedYear, selectedMonth, selectedCategory);
+            setExpenses(response.data);
+
         } catch (error) {
             console.log("No se pudo conseguir los Expenses para su busqueda", error)
         }
@@ -86,9 +70,6 @@ export default function ExpensesPage() {
     //     fetchExpenses();
     // }, []);
 
-
-
-
     return (
         <div className="min-h-screen bg-gray-900 text-white px-4 py-8 flex flex-col items-center">
             <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
@@ -99,27 +80,28 @@ export default function ExpensesPage() {
             {/* Barra de filtros */}
             <div className="bg-gray-800 rounded-xl p-6 mb-8 w-full max-w-3xl shadow-md flex flex-wrap justify-center gap-x-4 gap-y-4">
 
-                <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}
+                <select value={selectedCategory} onChange={(e) => setSelectedCategory(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 w-full sm:max-w-sm"
                 >
                     <option>Categoría</option>
 
-                    {categories.map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>{category.name}</option>
                     ))}
                 </select>
-                <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}
+                <select value={selectedMonth} onChange={(e) => setSelectedMonth(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 w-full sm:max-w-sm"
                 >
 
-                    <option>Mes</option>
+                    <option value={0}>Mes</option>
                     {
-                        months.map((cat) => (
-                            <option key={cat} value={cat}>{cat}</option>
+                        months.map((month) => (
+                            <option key={month.value} value={month.value}>{month.name}
+                            </option>
                         ))
                     }
                 </select>
-                <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}
+                <select value={selectedYear} onChange={(e) => setSelectedYear(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 w-full sm:max-w-sm"
                 >
                     <option>Año</option>

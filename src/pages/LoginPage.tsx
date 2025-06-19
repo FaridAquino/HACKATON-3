@@ -14,10 +14,9 @@ export default function LoginPage() {
 		event.preventDefault();
 		try {
 			await authContext.login(formData); // usa el método del contexto
-			navigate("/auth/dashboard"); // redirige después de login exitoso
+			navigate("/logged/dashboard"); // redirige después de login exitoso
 		} catch (error) {
 			console.error("Login Error:", error);
-			navigate("/auth/dashboard");
 		}
 	}
 

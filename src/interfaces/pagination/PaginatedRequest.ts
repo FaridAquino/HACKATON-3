@@ -1,1 +1,4 @@
-export interface PaginatedRequest {}
+export interface PaginatedRequest {
+    page: number;
+    size: number;
+}
