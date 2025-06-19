@@ -5,8 +5,9 @@ import LoginPage from "@pages/LoginPage";
 import RegisterPage from "@pages/RegisterPage";
 import DashboardPage from "@pages/DashboardPage";
 import Page1 from "@pages/Page1";
-import Page2 from "@pages/Page2";
+import Page2 from "@pages/ExpensesSummaryPage";
 import ExpensesPage from "@pages/ExpensesPage";
+import ExpensesSummaryPage from "@pages/ExpensesSummaryPage";
 
 export const router = createBrowserRouter([
 	{
@@ -34,8 +35,8 @@ export const router = createBrowserRouter([
 					path: "page1",
 					element: <Page1 />
 				}, {
-					path: "page2",
-					element: <Page2 />
+					path: "summary",
+					element: <ExpensesSummaryPage />
 				}, {
 					path: "expenses",
 					element: <ExpensesPage />

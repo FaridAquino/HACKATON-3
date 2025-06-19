@@ -3,28 +3,29 @@ import { useState } from "react";
 import { FaMoneyBillWave } from "react-icons/fa"; // Ícono para gastos
 import { getExpenses } from "@services/getExpenses"; // Asegúrate de que esta ruta sea correcta
 import ExpensesResponse from "@interfaces/expenses/ExpensesResponse";
+import BarraButtons from "@components/BarraButtons";
 
 const categories = [
-    {name:"Alimentación", id: 1},
-    {name:"Transporte", id: 2},
-    {name:"Vivienda", id: 3},
-    {name:"Servicios", id: 4},
-    {name:"Educaion", id: 5},
-    {name:"Salud", id: 6},
-    {name:"Entretenimiento", id: 7},
-    {name:"Ropa y calzado", id: 8},
-    {name:"Ahorros", id: 9},
-    {name:"Impuestos", id: 10},
-    {name:"Mascotas", id: 11},
-    {name:"Viajes",id: 12},
-    {name:"Donaciones", id: 13},
-    {name:"Seguros", id: 14},
-    {name:"Hijos y familia", id: 15},
-    {name:"Gimnasio y deporte", id: 16},
-    {name:"Tecnología y gadgets", id: 17},
-    {name:"Mantenimiento del hogar", id: 18},
-    {name:"Bebidas y snacks", id: 19},
-    {name:"Otros gastos personales", id: 20},
+    { name: "Alimentación", id: 1 },
+    { name: "Transporte", id: 2 },
+    { name: "Vivienda", id: 3 },
+    { name: "Servicios", id: 4 },
+    { name: "Educaion", id: 5 },
+    { name: "Salud", id: 6 },
+    { name: "Entretenimiento", id: 7 },
+    { name: "Ropa y calzado", id: 8 },
+    { name: "Ahorros", id: 9 },
+    { name: "Impuestos", id: 10 },
+    { name: "Mascotas", id: 11 },
+    { name: "Viajes", id: 12 },
+    { name: "Donaciones", id: 13 },
+    { name: "Seguros", id: 14 },
+    { name: "Hijos y familia", id: 15 },
+    { name: "Gimnasio y deporte", id: 16 },
+    { name: "Tecnología y gadgets", id: 17 },
+    { name: "Mantenimiento del hogar", id: 18 },
+    { name: "Bebidas y snacks", id: 19 },
+    { name: "Otros gastos personales", id: 20 },
 ];
 
 const months = [
@@ -72,6 +73,9 @@ export default function ExpensesPage() {
 
     return (
         <div className="min-h-screen bg-gray-900 text-white px-4 py-8 flex flex-col items-center">
+            <div className="fixed inset-y-0 left-0 bg-gray-800 w-[150px] p-6 rounded-r-lg shadow flex flex-col items-center justify-between">
+                <BarraButtons />
+            </div>
             <h1 className="text-3xl font-bold mb-6 flex items-center gap-2">
                 <FaMoneyBillWave className="text-green-400 text-4xl" />
                 Gastos Mensuales
