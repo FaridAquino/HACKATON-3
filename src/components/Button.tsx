@@ -8,13 +8,20 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
     const navigate = useNavigate();
+    const isActive = window.location.pathname === props.to;
 
     return (
         <button
-            className="bg-slate-300 p-3 rounded-lg hover:bg-slate-400 transition-all"
+            className={`p-4 rounded-xl transition-all duration-200 ${
+                isActive 
+                    ? 'bg-mocha-blue text-mocha-base shadow-lg' 
+                    : 'bg-mocha-surface1 text-mocha-subtext0 hover:bg-mocha-surface2 hover:text-mocha-text'
+            }`}
             onClick={() => navigate(props.to)}
         >
-            {props.icon}
+            <div className="w-6 h-6">
+                {props.icon}
+            </div>
         </button>
     );
 }

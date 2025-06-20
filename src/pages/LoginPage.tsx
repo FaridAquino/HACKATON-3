@@ -29,35 +29,56 @@ export default function LoginPage() {
 	}
 
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500">
-			<div className="bg-white w-full max-w-sm p-8 rounded-lg shadow-lg">
-				<h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Iniciar Sesión</h1>
-				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-					<input
-						type="email"
-						name="email"
-						placeholder="Correo electrónico"
-						className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-						value={formData.email}
-						onChange={handleChange}
-					/>
-					<input
-						type="password"
-						name="passwd"
-						placeholder="Contraseña"
-						className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-						value={formData.passwd}
-						onChange={handleChange}
-					/>
+		<div className="min-h-screen flex items-center justify-center bg-mocha-base">
+			<div className="bg-mocha-surface0 border border-mocha-surface1 w-full max-w-md p-8 rounded-xl shadow-2xl">
+				<div className="text-center mb-8">
+					<h1 className="text-3xl font-bold text-mocha-text mb-2">Ahorrista</h1>
+					<p className="text-mocha-subtext1">Inicia sesión en tu cuenta</p>
+				</div>
+				<form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+					<div>
+						<label className="block text-mocha-subtext1 text-sm font-medium mb-2">
+							Correo electrónico
+						</label>
+						<input
+							type="email"
+							name="email"
+							placeholder="tu@email.com"
+							className="w-full bg-mocha-surface1 border border-mocha-surface2 text-mocha-text p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-mocha-blue focus:border-transparent transition-all"
+							value={formData.email}
+							onChange={handleChange}
+							required
+						/>
+					</div>
+					<div>
+						<label className="block text-mocha-subtext1 text-sm font-medium mb-2">
+							Contraseña
+						</label>
+						<input
+							type="password"
+							name="passwd"
+							placeholder="••••••••••••"
+							className="w-full bg-mocha-surface1 border border-mocha-surface2 text-mocha-text p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-mocha-blue focus:border-transparent transition-all"
+							value={formData.passwd}
+							onChange={handleChange}
+							required
+							minLength={12}
+						/>
+						<p className="text-xs text-mocha-subtext0 mt-1">Mínimo 12 caracteres</p>
+					</div>
 					<button
 						type="submit"
-						className="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition-all"
+						className="w-full bg-mocha-blue hover:bg-mocha-sapphire text-mocha-base font-semibold p-3 rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
 					>
 						Iniciar Sesión
 					</button>
 				</form>
-				<div className="mt-4 text-center">
-					<a href="/register" className="text-blue-500 hover:underline">Registrarse</a>
+				<div className="mt-6 text-center">
+					<p className="text-mocha-subtext1">¿No tienes cuenta? {" "}
+						<a href="/auth/register" className="text-mocha-blue hover:text-mocha-sapphire hover:underline transition-colors">
+							Regístrate aquí
+						</a>
+					</p>
 				</div>
 			</div>
 		</div>

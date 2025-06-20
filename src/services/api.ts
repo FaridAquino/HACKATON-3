@@ -41,9 +41,8 @@ export default class Api {
 			headers: headers,
 		};
 
-		const path = this._basePath + config.url;
-
-		return axios<RequestType, AxiosResponse<ResponseType>>(path, configOptions);
+		// FIX: No concatenar basePath + url aquí, sólo pasar configOptions.
+		return axios<RequestType, AxiosResponse<ResponseType>>(configOptions);
 	}
 
 	public get<RequestType, ResponseType>(config: AxiosRequestConfig) {

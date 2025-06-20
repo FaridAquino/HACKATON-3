@@ -89,50 +89,95 @@ async function handleSubmit(event: React.FormEvent<HTMLFormElement>): Promise<vo
 }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-400">
-      <div className="bg-white w-full max-w-sm p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Registrarse</h1>
+    <div className="min-h-screen flex items-center justify-center bg-mocha-base">
+      <div className="bg-mocha-surface0 border border-mocha-surface1 w-full max-w-md p-8 rounded-xl shadow-2xl">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-mocha-text mb-2">Únete a Ahorrista</h1>
+          <p className="text-mocha-subtext1">Crea tu cuenta y comienza a controlar tus gastos</p>
+        </div>
 
         {/* Mostrar el error si ocurre */}
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+        {error && (
+          <div className="bg-mocha-red/20 border border-mocha-red rounded-lg p-3 mb-4">
+            <p className="text-mocha-red text-sm">{error}</p>
+          </div>
+        )}
 
         {/* Mostrar el mensaje de éxito si ocurre */}
-        {success && <div className="text-green-500 mb-4">{success}</div>}
+        {success && (
+          <div className="bg-mocha-green/20 border border-mocha-green rounded-lg p-3 mb-4">
+            <p className="text-mocha-green text-sm">{success}</p>
+          </div>
+        )}
 
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Correo electrónico"
-            className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="passwd"
-            placeholder="Contraseña"
-            className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={formData.passwd}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="confirmPasswd"
-            placeholder="Confirmar Contraseña"
-            className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={formData.confirmPasswd}
-            onChange={handleChange}
-          />
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+          <div>
+            <label className="block text-mocha-subtext1 text-sm font-medium mb-2">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="tu@email.com"
+              className="w-full bg-mocha-surface1 border border-mocha-surface2 text-mocha-text p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-mocha-green focus:border-transparent transition-all"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-mocha-subtext1 text-sm font-medium mb-2">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              name="passwd"
+              placeholder="••••••••••••"
+              className="w-full bg-mocha-surface1 border border-mocha-surface2 text-mocha-text p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-mocha-green focus:border-transparent transition-all"
+              value={formData.passwd}
+              onChange={handleChange}
+              required
+              minLength={12}
+            />
+            <p className="text-xs text-mocha-subtext0 mt-1">Mínimo 12 caracteres</p>
+          </div>
+          
+          <div>
+            <label className="block text-mocha-subtext1 text-sm font-medium mb-2">
+              Confirmar Contraseña
+            </label>
+            <input
+              type="password"
+              name="confirmPasswd"
+              placeholder="••••••••••••"
+              className="w-full bg-mocha-surface1 border border-mocha-surface2 text-mocha-text p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-mocha-green focus:border-transparent transition-all"
+              value={formData.confirmPasswd}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
           <button
             type="submit"
-            className="bg-green-500 text-white p-3 rounded-md hover:bg-green-600 transition-all"
+            className="w-full bg-mocha-green hover:bg-mocha-teal text-mocha-base font-semibold p-3 rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
           >
-            Registrarse
+            Crear Cuenta
           </button>
         </form>
-        <div className="mt-4 text-center">
-          <a href="/login" className="text-blue-500 hover:underline">¿Ya tienes cuenta? Iniciar sesión</a>
+        
+        <div className="mt-6 text-center">
+          <p className="text-mocha-subtext1">¿Ya tienes cuenta? {" "}
+            <a href="/auth/login" className="text-mocha-green hover:text-mocha-teal hover:underline transition-colors">
+              Inicia sesión aquí
+            </a>
+          </p>
+        </div>
+        
+        <div className="mt-4 p-3 bg-mocha-surface1 rounded-lg">
+          <p className="text-xs text-mocha-subtext0 text-center">
+            Al registrarte, se crearán automáticamente 10,000 gastos aleatorios para que pruebes la aplicación.
+          </p>
         </div>
       </div>
     </div>

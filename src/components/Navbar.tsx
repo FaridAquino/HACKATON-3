@@ -11,7 +11,7 @@ export default function Navbar() {
 	}
 
 	return (
-		<div className="bg-blue-600 text-white p-4">
+		<div className="bg-mocha-base text-white p-4">
 			<div className="flex justify-between items-center">
 				<div className="text-3xl font-bold">Ahorrista</div>
 				<section className="flex justify-center items-center gap-6">
