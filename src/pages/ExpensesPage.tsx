@@ -1,9 +1,11 @@
 // src/pages/ExpensesPage.tsx
-import { useState } from "react";
-import { FaMoneyBillWave } from "react-icons/fa"; // Ícono para gastos
+import { useEffect, useState } from "react";
+import { FaMoneyBillWave, FaTrash } from "react-icons/fa"; // Ícono para gastos
 import { getExpenses } from "@services/getExpenses"; // Asegúrate de que esta ruta sea correcta
 import ExpensesResponse from "@interfaces/expenses/ExpensesResponse";
 import BarraButtons from "@components/BarraButtons";
+import { BorrarGasto } from "@services/DeleteGasto";
+import { toast } from "react-hot-toast";
 
 const categories = [
     { name: "Alimentación", id: 1 },
@@ -50,6 +52,8 @@ export default function ExpensesPage() {
     const [selectedYear, setSelectedYear] = useState(0);
     const [expenses, setExpenses] = useState<ExpensesResponse>([]);
     const [loading, setLoading] = useState(false);
+    const [errWhenDelete, seterrWhenDelete] = useState(false);
+    const [deleteSucces, setdeleteSucces] = useState(false);
 
     const fetchGastos = async () => {
         setLoading(true);
@@ -67,6 +71,37 @@ export default function ExpensesPage() {
 
     }
 
+
+    const deleteGasto = async (id: number) => {
+        const borrando = toast.loading("Borando gasto...")
+        try {
+            const result = await BorrarGasto(id);
+            setExpenses((prev) => prev.filter((g) => g.id !== id));
+            toast.dismiss(borrando);
+
+            setdeleteSucces(result);
+            // await fetchGastos(); // evitaremso recarga rdesde el backedns. ello demora.
+
+
+            toast.success("Borrado Exitoso!!");
+
+        } catch (error) {
+            setdeleteSucces(false);
+            toast.error("Experimentamos un error al borrar");
+        }
+
+
+    }
+
+    useEffect(() => {
+        if (selectedCategory && selectedMonth && selectedYear) {
+            fetchGastos();
+        }
+    }, [selectedCategory, selectedMonth, selectedYear]) // cada vez que cambia alguno de estos
+
+
+    // const onDelete()
+
     // useEffect(() => {
     //     fetchExpenses();
     // }, []);
@@ -83,21 +118,22 @@ export default function ExpensesPage() {
 
             {/* Barra de filtros */}
             <div className="bg-gray-800 rounded-xl p-6 mb-8 w-full max-w-3xl shadow-md flex flex-wrap justify-center gap-x-4 gap-y-4">
+                <p>Pruebe al menos con Alimentación, enero, año 2025    </p>
 
-                <select value={selectedCategory} onChange={(e) => setSelectedCategory(Number(e.target.value))}
+                <select required={true} name="selectedCategory" value={selectedCategory} onChange={(e) => setSelectedCategory(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 w-full sm:max-w-sm"
                 >
-                    <option>Categoría</option>
+                    <option value={0} disabled>Categoría</option>
 
                     {categories.map((category) => (
                         <option key={category.id} value={category.id}>{category.name}</option>
                     ))}
                 </select>
-                <select value={selectedMonth} onChange={(e) => setSelectedMonth(Number(e.target.value))}
+                <select required={true} value={selectedMonth} onChange={(e) => setSelectedMonth(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 w-full sm:max-w-sm"
                 >
 
-                    <option value={0}>Mes</option>
+                    <option value={0} disabled>Mes</option>
                     {
                         months.map((month) => (
                             <option key={month.value} value={month.value}>{month.name}
@@ -105,10 +141,10 @@ export default function ExpensesPage() {
                         ))
                     }
                 </select>
-                <select value={selectedYear} onChange={(e) => setSelectedYear(Number(e.target.value))}
+                <select required={true} value={selectedYear} onChange={(e) => setSelectedYear(Number(e.target.value))}
                     className="bg-gray-700 text-white rounded-lg px-4 py-2 w-full sm:max-w-sm"
                 >
-                    <option>Año</option>
+                    <option value={0} disabled >Año</option>
                     {years.map((cat) => (
                         <option key={cat} value={cat}>{cat}</option>
                     ))
@@ -124,22 +160,34 @@ export default function ExpensesPage() {
                     {loading ? "Cargando..." : "Filtrar"}
                 </button>
             </div>
-
+            <div>
+                <p>Se sabe que tiene gastos registrados al menos en Alimentación, enero, año 2025    </p>
+            </div>
             {/* Resultados */}
             <div className="w-full max-w-3xl space-y-4">
                 {expenses.length === 0 ? (
-                    <p className="text-gray-400 text-center">No hay resultados para mostrar.</p>
+                    <p className="text-gray-400 text-center">Parece que no hay datos para los campos ingresados</p>
                 ) : (
                     expenses.map((expense) => (
                         <div
                             key={expense.id}
-                            className="bg-gray-800 p-4 rounded-lg shadow-md flex justify-between items-center"
+                            className="bg-gray-800 px-8 py-2 rounded-lg shadow-md flex justify-between items-center "
                         >
                             <div>
                                 <p className="text-lg font-semibold">{expense.category.name}</p>
                                 <p className="text-sm text-gray-400">{expense.date}</p>
                             </div>
                             <p className="text-xl font-bold text-green-400">S/. {expense.amount.toFixed(2)}</p>
+                            <div className="flex justify-end">
+                                <button
+                                    disabled={loading}
+                                    onClick={() => deleteGasto(expense.id)}
+                                    className="text-red-500 hover:text-red-700 transition-colors duration-200"
+                                    title="Eliminar gasto"
+                                >
+                                    <FaTrash size={18} />
+                                </button>
+                            </div>
                         </div>
                     ))
                 )}
